@@ -1,0 +1,27 @@
+plugins {
+    id 'war'
+}
+
+group 'my.prog'
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    // https://mvnrepository.com/artifact/javax.servlet.jsp.jstl/jstl-api
+    implementation 'javax.servlet.jsp.jstl:jstl-api:1.2'
+    // https://mvnrepository.com/artifact/jakarta.servlet/jakarta.servlet-api
+    compileOnly 'jakarta.servlet:jakarta.servlet-api:6.0.0'
+    // https://mvnrepository.com/artifact/org.apache.tomcat/tomcat-servlet-api
+    implementation 'org.apache.tomcat:tomcat-servlet-api:11.0.0-M11'
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
+}
+
+test {
+    useJUnitPlatform()
+}
+sourceCompatibility = JavaVersion.VERSION_16
+targetCompatibility = JavaVersion.VERSION_16
