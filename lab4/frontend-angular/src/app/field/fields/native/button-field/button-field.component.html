@@ -1,0 +1,8 @@
+<button
+  type="button"
+  *ngFor="let option of options"
+  (click)="value = option"
+  [ngClass]="{ active: value === option }"
+>
+  {{ option }}
+</button>

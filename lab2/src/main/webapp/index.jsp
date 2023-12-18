@@ -29,32 +29,32 @@
 	Введите куда стреляем:
 </h2>
 
-
-<form action="shoot" method="POST">
-	<div class="form-field">
+<form action="AreaCheckServlet" method="POST">
+	<div class="form-field" id="coordinateXCont">
 		<label for="coordinateX">Координата X:</label>
-		<!-- <input id="coordinateX" name="coordinateX" type="text" maxlength="9"> -->
-		<div id="x-checkboxes" class="x-checkboxes"></div>
-		<div id="coordinateXError" class="error"></div>
+		<div id="coordinateXCheckboxes" class="x-checkboxes"></div>
+		<!-- <div id="coordinateXError" class="error"></div> -->
 	</div>
 
-	<div class="form-field">
+	<div class="form-field" id="coordinateYCont">
 		<label for="coordinateY">Координата Y:</label>
 		<input id="coordinateY" name="coordinateY" type="text" maxlength="9">
-		<div id="coordinateYError" class="error"></div>
-
+		<!-- <div id="coordinateYError" class="error"></div> -->
 	</div>
 
-	<div class="form-field">
+	<div class="form-field" id="radiusCont">
 		<label for="radius">Радиус:</label>
 		<select id="radius" name="radius"></select>
-		<div id="radiusError" class="error"></div>
+		<!-- <div id="radiusError" class="error"></div> -->
 	</div>
 
-	<button id="submit" type="submit" disabled>Сабмит</button>
+	<button id="submitBtn" type="submit" disabled>Сабмит</button>
 </form>
 
 </div>
+
+<script src="./assets/scripts/field.js"></script>
+<script src="./assets/scripts/main.js"></script>
 
 <%@ include file="components/chart.jsp" %>
 
@@ -62,7 +62,6 @@
 
 </div>
 
-<script src="./assets/scripts/main.js"></script>
 
 <html>
 <body>

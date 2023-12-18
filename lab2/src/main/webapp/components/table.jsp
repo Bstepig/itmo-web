@@ -45,6 +45,7 @@
 dots.push({
     x: ${shot.x()},
     y: ${shot.y()},
+    hit: ${shot.hit()},
 });
 </c:forEach>
 </script>

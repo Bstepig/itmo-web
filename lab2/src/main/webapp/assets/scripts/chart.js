@@ -6,11 +6,6 @@ if (!canvas.getContext) throw new Error('Канвасы дружно пошли 
 
 const ctx = canvas.getContext("2d");
 
-let currentX = 0;
-let currentY = 0;
-
-let RADIUS = null;
-
 let CANVAS_WIDTH;
 let CANVAS_HEIGHT
 
@@ -32,7 +27,7 @@ let CANVAS_Y_PADDINGS;
 const HEAD_LEN = 7;
 const PRIMARY_COLOR_WHITE_THEME = '#3399ff';
 const PRIMARY_COLOR = '#005bdb';
-// const RADIUS = 3;
+// const radiusField.value = 3;
 
 let CURSOR_X = null;
 let CURSOR_Y = null;
@@ -61,10 +56,10 @@ canvas.addEventListener('mouseleave', (event) => {
 });
 
 canvas.addEventListener('click', (event) => {
-  if (!RADIUS) {
+  if (!radiusField.value) {
     let radius = prompt('Раудиусик нужон');
-    radiusValueChanged(radius);
-    if (!RADIUS) return;
+    radiusField.onChange(radius);
+    if (!radiusField.value) return;
   }
   const { x, y } = getCursorInViewport(event.pageX, event.pageY);
 
@@ -105,16 +100,16 @@ function init() {
 function draw() {
   	ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-  	if (currentX != null && currentY != null) {
-  	    markDot = {x: currentX, y: currentY};
+  	if (coordinateXField.value != null && coordinateYField.value != null) {
+  	    markDot = {x: coordinateXField.value, y: coordinateYField.value};
   	} else {
   	    markDot = null;
   	}
 
 	drawSquare();
+	drawAxis();
 	drawDots();
 	drawMarkDot();
-	drawAxis();
 	drawCursor();
 }
 
@@ -143,7 +138,7 @@ function drawSquare() {
 }
 
 function drawDot(dot, radius, color) {
-  if (!RADIUS) return;
+  if (!radiusField.value) return;
   const {x, y} = calculatePixelCoordinates({realX: dot.x, realY: dot.y});
 
   ctx.fillStyle = color;
@@ -157,7 +152,7 @@ function drawDots() {
 	const minRadius = 1;
 	const maxRadius = 3;
 	for (let i = 0; i < dots.length; i++) {
-		drawDot(dots[i], (i / dots.length) * (maxRadius - minRadius) + minRadius, 'red');
+		drawDot(dots[i], maxRadius, dots[i].hit ? 'red' : 'blue');
 	}
 }
 
@@ -228,7 +223,7 @@ function drawCursor() {
   ctx.font = '12px Ubuntu';
   ctx.arc(x, y, 10, 0, 2 * Math.PI);
   ctx.stroke();
-  if (RADIUS) {
+  if (radiusField.value) {
       const {x: realX, y: realY} = calculateRealCoordinates({x, y});
       if (x > CANVAS_WIDTH - 100) {
         ctx.textAlign = 'right';
@@ -241,16 +236,16 @@ function drawCursor() {
 }
 
 function calculateRealCoordinates({x, y}) {
-    if (!RADIUS) throw new Error('Error');
-	const cmInPixels = 2 * RADIUS / CANVAS_CHARTS_WIDTH;
+    if (!radiusField.value) throw new Error('Error');
+	const cmInPixels = 2 * radiusField.value / CANVAS_CHARTS_WIDTH;
 	const realX = (x - CANVAS_WIDTH / 2) * cmInPixels;
 	const realY = -(y - CANVAS_HEIGHT / 2) * cmInPixels;
 	return {x: realX, y: realY};
 }
 
 function calculatePixelCoordinates({realX, realY}) {
-    if (!RADIUS) throw new Error('Error');
-	const pixelsInCm = CANVAS_CHARTS_WIDTH / (2 * RADIUS);
+    if (!radiusField.value) throw new Error('Error');
+	const pixelsInCm = CANVAS_CHARTS_WIDTH / (2 * radiusField.value);
 	const x = realX * pixelsInCm + CANVAS_WIDTH / 2;
 	const y = -(realY * pixelsInCm - CANVAS_HEIGHT / 2);
 	return {x, y};

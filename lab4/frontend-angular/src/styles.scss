@@ -1,0 +1,37 @@
+* {
+  box-sizing: border-box;
+  font-family: ArnoPro, serif;
+}
+
+body, html {
+  padding: 0;
+  margin: 0;
+}
+
+.container {
+  max-width: 1200px;
+  margin: auto;
+}
+
+a {
+  text-decoration: none;
+  color: #9dadc1;
+}
+
+@font-face {
+  font-family: 'ArnoPro';
+  src: url('assets/fonts/ArnoPro/arnopro_caption.otf');
+  font-weight: 400;
+}
+
+@media screen and (max-width: 1400px) {
+  .container {
+    max-width: 900px;
+  }
+}
+@media screen and (max-width: 1000px) {
+  .container {
+    max-width: 700px;
+    padding: 0 10px;
+  }
+}

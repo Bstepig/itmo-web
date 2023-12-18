@@ -1,0 +1,8 @@
+<input
+  (click)="$event.stopPropagation()"
+  *ngFor="let option of options"
+  type="radio"
+  [name]="name"
+  [(ngModel)]="value"
+  [value]="option"
+/>

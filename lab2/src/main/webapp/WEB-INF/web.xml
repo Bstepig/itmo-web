@@ -6,16 +6,30 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee
                       http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
-         version="4.0">
-    <filter>
-        <filter-name>HiddenFilter</filter-name>
-        <filter-class>my.prog.HiddenFilter</filter-class>
-    </filter>
-    <filter-mapping>
-        <filter-name>HiddenFilter</filter-name>
-        <url-pattern>/area-checker</url-pattern>
-    </filter-mapping>
+         version="4.0"><!--CharsetFilter start-->
 
+<!--    <filter>-->
+<!--        <filter-name>CharsetFilter</filter-name>-->
+<!--        <filter-class>my.prog.CharsetFilter</filter-class>-->
+<!--        <init-param>-->
+<!--            <param-name>requestEncoding</param-name>-->
+<!--            <param-value>UTF-8</param-value>-->
+<!--        </init-param>-->
+<!--    </filter>-->
+
+<!--    <filter-mapping>-->
+<!--        <filter-name>CharsetFilter</filter-name>-->
+<!--        <url-pattern>/*</url-pattern>-->
+<!--    </filter-mapping>-->
+
+<!--    <filter>-->
+<!--        <filter-name>HiddenFilter</filter-name>-->
+<!--        <filter-class>my.prog.HiddenFilter</filter-class>-->
+<!--    </filter>-->
+<!--    <filter-mapping>-->
+<!--        <filter-name>HiddenFilter</filter-name>-->
+<!--        <url-pattern>/area-checker</url-pattern>-->
+<!--    </filter-mapping>-->
 
     <servlet>
         <servlet-name>ControllerServlet</servlet-name>
@@ -24,9 +38,18 @@
     </servlet>
     <servlet-mapping>
         <servlet-name>ControllerServlet</servlet-name>
-<!--        <url-pattern>/</url-pattern>-->
+        <!--        <url-pattern>/</url-pattern>-->
         <url-pattern>/table</url-pattern>
         <url-pattern>/shoot</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>AreaCheckServlet</servlet-name>
+        <servlet-class>my.prog.AreaCheckServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>AreaCheckServlet</servlet-name>
+        <!--        <url-pattern>/</url-pattern>-->
+        <url-pattern>/AreaCheckServlet</url-pattern>
     </servlet-mapping>
 
     <servlet>

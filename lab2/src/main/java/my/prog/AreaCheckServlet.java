@@ -5,6 +5,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -15,9 +16,15 @@ public class AreaCheckServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+//        resp.setCharacterEncoding("UTF-8");
+//        resp.setContentType("text/html; charset=UTF-8");
+//
+//        var out = resp.getOutputStream("UTF-8");
 
+//        out.println("Привет");
+//        return;
+//        var out = new PrintWriter(new OutputStreamWriter(resp.getOutputStream(), "UTF8"), true);
         var out = resp.getWriter();
-
         printHead(out);
         req.getRequestDispatcher("/components/header.jsp").include(req, resp);
         printOpen(out);
@@ -26,11 +33,19 @@ public class AreaCheckServlet extends HttpServlet {
         Date now = new Date();
 
         try {
-            var coordinateX = Float.parseFloat(req.getParameter("coordinateX"));
-            var coordinateY = Float.parseFloat(req.getParameter("coordinateY"));
-            var radius = Float.parseFloat(req.getParameter("radius"));
+            var coordinateXRaw = req.getParameter("coordinateX");
+            var coordinateYRaw = req.getParameter("coordinateY");
+            var radiusRaw = req.getParameter("radius");
+            if (coordinateXRaw == null || coordinateYRaw == null || radiusRaw == null) {
+                resp.setStatus(400);
+                out.println(("<div>Oiiibka: не всё доставили</div>"));
+                return;
+            }
+            var coordinateX = Float.parseFloat(coordinateXRaw);
+            var coordinateY = Float.parseFloat(coordinateYRaw);
+            var radius = Float.parseFloat(radiusRaw);
             var hit = this.containsCoordinate(coordinateX, coordinateY, radius);
-            
+
             String errorMsg = validate(coordinateX, coordinateY, radius);
             if (errorMsg != null) {
                 resp.setStatus(400);
@@ -109,6 +124,8 @@ public class AreaCheckServlet extends HttpServlet {
 
     private void printHead(PrintWriter out) throws IOException {
         out.print("""
+                <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+
                 <!doctype html>
                 <html lang="ru">
                 <head>

@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ace="http://www.icefaces.org/icefaces/components">
+
+<h:head>
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"/>
+    <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
+    <link rel="stylesheet" href="./assets/styles/global.css"/>
+    <link rel="stylesheet" href="./assets/styles/shoot.css"/>
+    <link rel="stylesheet" href="./assets/styles/index.css"/>
+    <title>Web</title>
+</h:head>
+
+
+<h:body>
+
+    <script>
+        const xInputMin = #{rifle.coordinateXInput.min};
+        const xInputMax = #{rifle.coordinateXInput.max};
+        const yInputMin = #{rifle.coordinateYInput.min};
+        const yInputMax = #{rifle.coordinateYInput.max};
+        const rInputMin = #{rifle.radiusInput.min};
+        const rInputMax = #{rifle.radiusInput.max};
+
+
+        const GRAPH = [
+            {
+                shape: '#{rifle.target.quadrant1 != null ? rifle.target.quadrant1.name : 'None'}',
+                width: #{rifle.target.quadrant1 != null ? rifle.target.quadrant1.width * 2 : 0 },
+                height: #{rifle.target.quadrant1 != null ? rifle.target.quadrant1.height * 2 : 0 },
+            },
+            {
+                shape: '#{rifle.target.quadrant2 != null ? rifle.target.quadrant2.name : 'None'}',
+                width: #{rifle.target.quadrant2 != null ? rifle.target.quadrant2.width * 2 : 0 },
+                height: #{rifle.target.quadrant2 != null ? rifle.target.quadrant2.height * 2 : 0 },
+            },
+            {
+                shape: '#{rifle.target.quadrant3 != null ? rifle.target.quadrant3.name : 'None'}',
+                width: #{rifle.target.quadrant3 != null ? rifle.target.quadrant3.width * 2 : 0 },
+                height: #{rifle.target.quadrant3 != null ? rifle.target.quadrant3.height * 2 : 0 },
+            },
+            {
+                shape: '#{rifle.target.quadrant4 != null ? rifle.target.quadrant4.name : 'None'}',
+                width: #{rifle.target.quadrant4 != null ? rifle.target.quadrant4.width * 2 : 0 },
+                height: #{rifle.target.quadrant4 != null ? rifle.target.quadrant4.height * 2 : 0 },
+            },
+        ]
+
+    </script>
+
+
+    <ui:include src="/components/header.xhtml"/>
+
+    <f:view>
+
+        <div class="container">
+
+            <div class="wrapper">
+
+                <h2>
+                    Введите куда стреляем:
+                </h2>
+
+
+                <h:form>
+
+                    <div class="form-field" id="coordinateXCont">
+                        <h:outputLabel value="Координата X:" for="coordinateX"/>
+
+                        <c:if test="#{rifle.coordinateXInput.type.label == 'selectOneRadio'}">
+                            <h:selectOneRadio id="coordinateX" value="#{rifle.coordinateX}">
+                                <f:selectItems value="#{rifle.coordinateXInput.options}"/>
+                            </h:selectOneRadio>
+                        </c:if>
+
+                        <c:if test="#{rifle.coordinateXInput.type.label == 'selectOneMenu'}">
+                            <h:selectOneMenu id="coordinateX" value="#{rifle.coordinateX}">
+                                <f:selectItems value="#{rifle.coordinateXInput.options}"/>
+                            </h:selectOneMenu>
+                        </c:if>
+
+                        <c:if test="#{rifle.coordinateXInput.type.label == 'selectBooleanCheckbox'}">
+                            <p>#{rifle.coordinateX}</p>
+                            <ui:repeat var="option" value="${rifle.coordinateXInput.options}">
+                                #{option}
+                                <h:selectBooleanCheckbox id="coordinateX"
+                                                         immediate="true"
+                                                         value="#{option == rifle.coordinateX}"
+                                                         onclick="#{rifle.setCoordinateX(option)}"
+                                                         valueChangeListener="#{rifle.setCoordinateX(option)}"/>
+                            </ui:repeat>
+                        </c:if>
+
+                        <c:if test="#{rifle.coordinateXInput.type.label == 'commandButton'}">
+                            <p>#{rifle.coordinateX}</p>
+                            <ui:repeat var="option" value="${rifle.coordinateXInput.options}">
+                                <h:commandButton id="coordinateX" value="#{option}"
+                                                 action="#{rifle.setCoordinateX(option)}"/>
+                            </ui:repeat>
+                        </c:if>
+
+                        <c:if test="#{rifle.coordinateXInput.type.label == 'commandLink'}">
+                            <p>#{rifle.coordinateX}</p>
+                            <ui:repeat var="option" value="${rifle.coordinateXInput.options}">
+                                <h:commandLink id="coordinateX" value="#{option}"
+                                               action="#{rifle.setCoordinateX(option)}"/>
+                            </ui:repeat>
+                        </c:if>
+
+                        <c:if test="#{rifle.coordinateXInput.type.label == 'inputText'}">
+                            <h:inputText id="coordinateX"
+                                         value="#{rifle.coordinateX}"
+                                         validator="#{rifle.validateCoordinateX}">
+                                <f:ajax />
+                            </h:inputText>
+                            <div class="error">
+                                <h:message for="coordinateX"/>
+                            </div>
+                        </c:if>
+
+                        <c:if test="#{rifle.coordinateXInput.type.label == 'p:spinner'}">
+                            <p:spinner id="coordinateX"
+                                       value="#{rifle.coordinateX}" min="#{rifle.coordinateXInput.min}"
+                                       max="#{rifle.coordinateXInput.max}" stepFactor="#{rifle.coordinateXInput.step}"/>
+                        </c:if>
+
+                        <c:if test="#{rifle.coordinateXInput.type.label == 'p:slider'}" columns="1">
+                            <h:panelGrid style="margin-bottom: 10px">
+                                <p:inputText id="coordinateX" value="#{rifle.coordinateX}"/>
+                                <p:slider for="coordinateX"
+                                          minValue="#{rifle.coordinateXInput.min}"
+                                          maxValue="#{rifle.coordinateXInput.max}"
+                                          step="#{rifle.coordinateXInput.step}"
+                                          range="false"/>
+                            </h:panelGrid>
+                        </c:if>
+
+                        <c:if test="#{rifle.coordinateXInput.type.label == 'ace:sliderEntry'}">
+                            <ace:sliderEntry id="coordinateX"
+                                             value="#{rifle.coordinateX}"
+                                             min="#{rifle.coordinateXInput.min}"
+                                             max="#{rifle.coordinateXInput.max}"
+                                             stepPercent="#{rifle.coordinateXInput.step}"/>
+                        </c:if>
+                    </div>
+
+                    <div class="form-field" id="coordinateYCont">
+                        <h:outputLabel value="Координата Y:" for="coordinateY"/>
+                        <h:inputText id="coordinateY" value="#{rifle.coordinateY}" maxlength="9"/>
+                    </div>
+
+                    <div class="form-field" id="radiusCont">
+                        <h:outputLabel value="Радиус:" for="radius"/>
+                        <h:inputText id="radius" value="#{rifle.radius}" maxlength="9"/>
+                    </div>
+
+<!--                    <div class="form-field" id="radiusCont" style="margin-bottom: 10px">-->
+<!--                        <p:inputText id="radius" value="#{rifle.radius}"/>-->
+<!--                        <p:slider for="radius" range="false"/>-->
+<!--                    </div>-->
+
+                    <!--                <div class="form-field" id="radiusCont">-->
+                    <!--                    <div class="checkboxes" id="radius"></div>-->
+
+                    <!--                    <h:outputLabel value="Радиус:" for="radius"/>-->
+
+                    <!--                    <p:selectOneMenu id="option" value="#{rifle.radius}">-->
+                    <!--                        <f:selectItem itemLabel="Select One" itemValue=""/>-->
+                    <!--                        <f:selectItem itemLabel="Option1" itemValue="Option1"/>-->
+                    <!--                        <f:selectItem itemLabel="Option2" itemValue="Option2"/>-->
+                    <!--                        <f:selectItem itemLabel="Option3" itemValue="Option3"/>-->
+                    <!--                        <f:facet name="footer">-->
+                    <!--                            <p:divider styleClass="mt-0"/>-->
+                    <!--                            <h:outputText value="3 options" style="font-weight:bold;"/>-->
+                    <!--                        </f:facet>-->
+                    <!--                    </p:selectOneMenu>-->
+
+                    <!--                    <select id="radius" name="radius"></select>-->
+                    <!--                </div>-->
+
+                    <h:commandButton action="#{rifle.shoot}" id="submit" value="Сабмит"/>
+                </h:form>
+
+            </div>
+
+            <script src="./assets/scripts/field.js"></script>
+            <script src="./assets/scripts/main.js"></script>
+
+            <ui:include src="/components/chart.xhtml"/>
+            <ui:include src="/components/table.xhtml"/>
+
+        </div>
+
+        <!--    <h:outputScript library="js" name="./assets/scripts/main.js" />-->
+
+    </f:view>
+</h:body>
+
+</html>

@@ -1,0 +1,33 @@
+<a routerLink="">хоуми</a>
+
+<form [formGroup]="formGroup" (ngSubmit)="submit()">
+  <div class="field">
+    <label> Coordinate X </label>
+
+    <wb-auto-field
+      formControlName="coordinateX"
+      [field]="config.coordinateX"
+    ></wb-auto-field>
+  </div>
+
+  <div class="field">
+    <label> Coordinate Y </label>
+
+    <wb-auto-field
+      formControlName="coordinateY"
+      [field]="config.coordinateY"
+    ></wb-auto-field>
+  </div>
+
+  <div class="field">
+    <label> Radius </label>
+
+    <wb-auto-field
+      formControlName="radius"
+      [field]="config.radius"
+    ></wb-auto-field>
+  </div>
+  <button type="submit">Submit</button>
+</form>
+
+{{ formGroup.value | json }}
