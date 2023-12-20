@@ -12,16 +12,14 @@ public class ControllerServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         // TOO IMPORTANT BECAUSE LATER IT WILL BE BREAKING UP
 //        req.setCharacterEncoding("UTF-8");
-//        resp.setCharacterEncoding("UTF-8");
-//        resp.setContentType("text/html; charset=UTF-8");
+        resp.setCharacterEncoding("UTF-8");
+        resp.setContentType("text/html; charset=UTF-8");
 
         String path = req.getServletPath();
         switch (path) {
             case "/shoot" -> {
-//                AreaCheckServlet areaCheckServlet = new AreaCheckServlet();
-//                areaCheckServlet.doPost(req, resp);
                 RequestDispatcher dispatcher = req.getRequestDispatcher("AreaCheckServlet");
-                dispatcher.forward(req,resp);
+                dispatcher.forward(req, resp);
             }
             case "/table" -> {
                 getServletContext().getRequestDispatcher("/index.jsp").forward(req, resp);
@@ -34,19 +32,23 @@ public class ControllerServlet extends HttpServlet {
         // TOO IMPORTANT BECAUSE LATER IT WILL BE BREAKING UP
         resp.setCharacterEncoding("UTF-8");
         resp.setContentType("text/html; charset=UTF-8");
-        
+
         String path = req.getServletPath();
         switch (path) {
-            case "" -> {
+            case "/shoot":
+            case "": {
                 Shot[] shots = (Shot[])req.getSession().getAttribute("shots");
                 req.setAttribute("shots", shots);
                 getServletContext().getRequestDispatcher("/index.jsp").forward(req, resp);
+                break;
             }
-            case "/table" -> {
+            case "/table": {
                 getServletContext().getRequestDispatcher("/index.jsp").forward(req, resp);
+                break;
             }
-            case "/clear" -> {
+            case "/clear": {
                 getServletContext().getRequestDispatcher("/clear").forward(req, resp);
+                break;
             }
         }
     }

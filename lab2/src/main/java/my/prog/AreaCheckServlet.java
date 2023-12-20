@@ -16,14 +16,9 @@ public class AreaCheckServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-//        resp.setCharacterEncoding("UTF-8");
-//        resp.setContentType("text/html; charset=UTF-8");
-//
-//        var out = resp.getOutputStream("UTF-8");
+        //resp.setCharacterEncoding("UTF-8");
+        //resp.setContentType("text/html; charset=UTF-8");
 
-//        out.println("Привет");
-//        return;
-//        var out = new PrintWriter(new OutputStreamWriter(resp.getOutputStream(), "UTF8"), true);
         var out = resp.getWriter();
         printHead(out);
         req.getRequestDispatcher("/components/header.jsp").include(req, resp);
@@ -38,7 +33,7 @@ public class AreaCheckServlet extends HttpServlet {
             var radiusRaw = req.getParameter("radius");
             if (coordinateXRaw == null || coordinateYRaw == null || radiusRaw == null) {
                 resp.setStatus(400);
-                out.println(("<div>Oiiibka: не всё доставили</div>"));
+                out.println("<div>Oiiiubka: не всё доставили</div>");
                 return;
             }
             var coordinateX = Float.parseFloat(coordinateXRaw);
@@ -100,12 +95,12 @@ public class AreaCheckServlet extends HttpServlet {
     private void printRow(PrintWriter out, Shot shot) {
         out.println("<table class=\"wrapper\">");
         out.println("<tr>");
-        out.println("<td>Ч</td>");
-        out.println("<td>Н</td>");
-        out.println("<td>Кфвшгы</td>");
-        out.println("<td>Попадание</td>");
-        out.println("<td>Крутилось</td>");
-        out.println("<td>Вертелось</td>");
+        out.println("<th>Ч</th>");
+        out.println("<th>Н</th>");
+        out.println("<th>Кфвшгы</th>");
+        out.println("<th>Попадание</th>");
+        out.println("<th>Крутилось</th>");
+        out.println("<th>Вертелось</th>");
         out.println("</tr>");
         out.println("<tr>");
         out.println("<td>" + shot.x() + "</td>");
@@ -124,8 +119,6 @@ public class AreaCheckServlet extends HttpServlet {
 
     private void printHead(PrintWriter out) throws IOException {
         out.print("""
-                <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-
                 <!doctype html>
                 <html lang="ru">
                 <head>
