@@ -6,6 +6,6 @@
     <managed-bean>
         <managed-bean-name>rifle</managed-bean-name>
         <managed-bean-class>my.web.Rifle</managed-bean-class>
-        <managed-bean-scope>application</managed-bean-scope>
+        <managed-bean-scope>session</managed-bean-scope>
     </managed-bean>
 </faces-config>

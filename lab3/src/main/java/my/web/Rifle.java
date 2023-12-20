@@ -20,7 +20,7 @@ import java.util.List;
 public class Rifle {
 
     private final int updateTime = 2;
-    private final Input coordinateXInput = new Input(InputType.inputText, 20, 50);
+    private final Input coordinateXInput = new Input(InputType.commandButton, 0, 10, 0.5);
     private final Input coordinateYInput = new Input(InputType.pSlider, 0, 10, 0.25);
     private final Input radiusInput = new Input(InputType.pSpinner, 0, 10, 0.25);
 
