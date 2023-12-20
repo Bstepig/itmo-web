@@ -27,6 +27,12 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-validation:3.2.0")
     // https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-security
     implementation("org.springframework.boot:spring-boot-starter-security:3.2.0")
+
+    // https://mvnrepository.com/artifact/io.springfox/springfox-swagger2
+    implementation("io.springfox:springfox-swagger2:3.0.0")
+    // https://mvnrepository.com/artifact/io.springfox/springfox-swagger-ui
+    implementation("io.springfox:springfox-swagger-ui:3.0.0")
+
     // https://mvnrepository.com/artifact/org.springframework.security/spring-security-core
 //    implementation("org.springframework.security:spring-security-core:6.2.0")
     // https://mvnrepository.com/artifact/org.springframework.security/spring-security-crypto
