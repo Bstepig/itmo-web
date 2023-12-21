@@ -17,8 +17,9 @@
     <tbody id="tbody">
         <%@ page import="java.util.*, java.io.*" %>
         <%@ page import="my.prog.Shot" %>
+        <jsp:useBean id="rifle" class="my.prog.Rifle" scope="session" />
 
-        <c:forEach var="shot" items="${shots}">
+        <c:forEach var="shot" items="${rifle.shots}">
                 <tr>
                     <td class="coord-x">${shot.x()}</td>
                     <td class="coord-y">${shot.y()}</td>
@@ -40,7 +41,7 @@
 </table>
 
 <script>
-<c:forEach var="shot" items="${shots}">
+<c:forEach var="shot" items="${rifle.shots}">
 dots.push({
     x: ${shot.x()},
     y: ${shot.y()},

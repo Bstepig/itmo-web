@@ -5,20 +5,13 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
-import java.util.List;
 
 public class AreaCheckServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        //resp.setCharacterEncoding("UTF-8");
-        //resp.setContentType("text/html; charset=UTF-8");
-
         var out = resp.getWriter();
         printHead(out);
         req.getRequestDispatcher("/components/header.jsp").include(req, resp);
@@ -33,7 +26,7 @@ public class AreaCheckServlet extends HttpServlet {
             var radiusRaw = req.getParameter("radius");
             if (coordinateXRaw == null || coordinateYRaw == null || radiusRaw == null) {
                 resp.setStatus(400);
-                out.println("<div>Oiiiubka: РЅРµ РІСЃС‘ РґРѕСЃС‚Р°РІРёР»Рё</div>");
+                out.println("<div>Oiiiubka: не всё доставили</div>");
                 return;
             }
             var coordinateX = Float.parseFloat(coordinateXRaw);
@@ -44,16 +37,16 @@ public class AreaCheckServlet extends HttpServlet {
             String errorMsg = validate(coordinateX, coordinateY, radius);
             if (errorMsg != null) {
                 resp.setStatus(400);
-                out.println(("<div>РћС€РёР±РєР°: " + errorMsg + "</div>"));
+                out.println(("<div>Ошибка: " + errorMsg + "</div>"));
             } else {
                 long elapsedTime = (System.nanoTime() - startTime) / 1000;
                 var shot = new Shot(coordinateX, coordinateY, radius, hit, now, elapsedTime);
                 pushShot(req, shot);
 
                 if (hit) {
-                    out.println("<div>Р•СЃС‚СЊ РїРѕРїР°РґР°РЅРёРµ</div>");
+                    out.println("<div>Есть попадание</div>");
                 } else {
-                    out.println("<div>РќРµС‚ РїРѕРїР°РґР°РЅРёСЏ</div>");
+                    out.println("<div>Нет попадания</div>");
                 }
 
                 printRow(out, shot);
@@ -61,55 +54,52 @@ public class AreaCheckServlet extends HttpServlet {
 
         } catch (NumberFormatException e) {
             resp.setStatus(400);
-            out.println(("<div>РћС€РёР±РєР°: " + e.getMessage() + "</div>"));
+            out.println(("<div>Ошибка: " + e.getMessage() + "</div>"));
         }
 
         printFoot(out);
     }
 
     /**
-     * @return Р’РѕР·РІСЂР°С‰Р°РµС‚ РѕС€РёР±РєСѓ. null РµСЃР»Рё Р±РµР· РїСЂРѕР±Р»РµРј.
+     * @return Возвращает ошибку. null если без проблем.
      */
     private String validate(float x, float y, float radius) {
-        if (radius < 0) return "Р Р°РґРёСѓСЃ РґРѕР»Р¶РµРЅ Р±С‹С‚СЊ Р±РѕР»СЊС€Рµ РЅСѓР»СЏ.";
-        if (radius > 500) return "Р Р°РґРёСѓСЃ РґРѕР»Р¶РµРЅ Р±С‹С‚СЊ РЅРµ Р±РѕР»СЊС€Рµ 500.";
-        if (x < -radius * 2) return "РљРѕРѕСЂРґРёРЅР°С‚Р° x Р°Р±СЃРѕР»СЋС‚РЅРѕ РЅРµ РјРѕР¶РµС‚ Р±С‹С‚СЊ Р±РѕР»РµРµ С‡РµРј РІ РґРІР° СЂР°Р·Р° РјРµРЅСЊС€Рµ СЂР°РґРёСѓСЃР°.";
-        if (y < -radius * 2) return "РљРѕРѕСЂРґРёРЅР°С‚Р° y Р°Р±СЃРѕР»СЋС‚РЅРѕ РЅРµ РјРѕР¶РµС‚ Р±С‹С‚СЊ Р±РѕР»РµРµ С‡РµРј РІ РґРІР° СЂР°Р·Р° РјРµРЅСЊС€Рµ СЂР°РґРёСѓСЃР°.";
-        if (x > radius * 2) return "РљРѕРѕСЂРґРёРЅР°С‚Р° x РЅРµ РјРѕР¶РµС‚ Р±С‹С‚СЊ Р±РѕР»РµРµ С‡РµРј РІ РґРІР° СЂР°Р·Р° Р±РѕР»СЊС€Рµ СЂР°РґРёСѓСЃР°.";
-        if (y > radius * 2) return "РљРѕРѕСЂРґРёРЅР°С‚Р° y РЅРµ РјРѕР¶РµС‚ Р±С‹С‚СЊ Р±РѕР»РµРµ С‡РµРј РІ РґРІР° СЂР°Р·Р° Р±РѕР»СЊС€Рµ СЂР°РґРёСѓСЃР°.";
+        if (radius < 0) return "Радиус должен быть больше нуля.";
+        if (radius > 500) return "Радиус должен быть не больше 500.";
+        if (x < -radius * 2) return "Координата x абсолютно не может быть более чем в два раза меньше радиуса.";
+        if (y < -radius * 2) return "Координата y абсолютно не может быть более чем в два раза меньше радиуса.";
+        if (x > radius * 2) return "Координата x не может быть более чем в два раза больше радиуса.";
+        if (y > radius * 2) return "Координата y не может быть более чем в два раза больше радиуса.";
         return null;
     }
 
     private void pushShot(HttpServletRequest req, Shot shot) {
-        Shot[] shots = (Shot[]) req.getSession().getAttribute("shots");
-        if (shots == null) {
-            req.getSession().setAttribute("shots", new Shot[]{shot});
-        } else {
-            List<Shot> shotList = new ArrayList<>(Arrays.asList(shots));
-            shotList.add(shot);
-            Shot[] new_shots = shotList.toArray(shots);
-            req.getSession().setAttribute("shots", new_shots);
+        Rifle rifle = (Rifle) req.getSession().getAttribute("rifle");
+        if (rifle == null) {
+            rifle = new Rifle();
+            req.getSession().setAttribute("rifle", rifle);
         }
+        rifle.addShot(shot);
     }
 
     private void printRow(PrintWriter out, Shot shot) {
         out.println("<table class=\"wrapper\">");
         out.println("<tr>");
-        out.println("<th>Р§</th>");
-        out.println("<th>Рќ</th>");
-        out.println("<th>РљС„РІС€РіС‹</th>");
-        out.println("<th>РџРѕРїР°РґР°РЅРёРµ</th>");
-        out.println("<th>РљСЂСѓС‚РёР»РѕСЃСЊ</th>");
-        out.println("<th>Р’РµСЂС‚РµР»РѕСЃСЊ</th>");
+        out.println("<th>Ч</th>");
+        out.println("<th>Н</th>");
+        out.println("<th>Кфвшгы</th>");
+        out.println("<th>Попадание</th>");
+        out.println("<th>Крутилось</th>");
+        out.println("<th>Вертелось</th>");
         out.println("</tr>");
         out.println("<tr>");
         out.println("<td>" + shot.x() + "</td>");
         out.println("<td>" + shot.y() + "</td>");
         out.println("<td>" + shot.radius() + "</td>");
         if (shot.hit()) {
-            out.println("<td>Р•СЃС‚СЊ</td>");
+            out.println("<td>Есть</td>");
         } else {
-            out.println("<td>РќРµС‚</td>");
+            out.println("<td>Нет</td>");
         }
         out.println("<td>" + shot.executionTime() + "</td>");
         out.println("<td>" + shot.date() + "</td>");
