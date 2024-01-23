@@ -1,3 +1,7 @@
+const xInputValue = #{rifle.coordinateXInput.value};
+const yInputValue = #{rifle.coordinateYInput.value};
+const rInputValue = #{rifle.radiusInput.value};
+
 const xInputMin = #{rifle.coordinateXInput.min};
 const xInputMax = #{rifle.coordinateXInput.max};
 const yInputMin = #{rifle.coordinateYInput.min};

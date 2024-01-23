@@ -23,6 +23,10 @@
 <h:body>
     <script>
 
+        const xInputValue = #{rifle.coordinateX};
+        const yInputValue = #{rifle.coordinateY};
+        const rInputValue = #{rifle.radius};
+
         const xInputMin = #{rifle.coordinateXInput.min};
         const xInputMax = #{rifle.coordinateXInput.max};
         const yInputMin = #{rifle.coordinateYInput.min};
@@ -311,7 +315,7 @@
                 </div>
 
 
-                <h:commandButton action="#{rifle.shoot}" id="submit" value="Сабмит"/>
+                    <h:commandButton action="#{rifle.shoot}" id="submit" value="Сабмит"/>
             </h:form>
 
         </div>

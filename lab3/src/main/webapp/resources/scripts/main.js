@@ -36,7 +36,15 @@ const submitEl = document.getElementById(`${formId}:submit`);
 
 const coordinateXField = new TextField(`${formId}:coordinateX`, xInputMin, xInputMax, `${formId}:coordinateX`, `coordinateXCont`);
 const coordinateYField = new TextField(`${formId}:coordinateY`, yInputMin, yInputMax, `${formId}:coordinateY`, `coordinateYCont`);
-const radiusField = new SliderField(`${formId}:radius`, rInputMin, rInputMax, `${formId}:radius`, `radiusCont`);
+const radiusField = new EmptyField(`${formId}:radius`, `radiusCont`);
+
+setTimeout(() => {
+    coordinateXField.writeValue(xInputValue);
+    coordinateYField.writeValue(yInputValue);
+    radiusField.writeValue(rInputValue);
+}, 0);
+
+//const radiusField = new SliderField(`${formId}:radius`, rInputMin, rInputMax, `${formId}:radius`, `radiusCont`);
 
 coordinateXField.changed = () => {
 	this.checkIsError();
@@ -66,7 +74,16 @@ function newShot({x, y}) {
 	console.log(x, y);
 
 
-	requestShoot({ x: x, y: y });
+	requestShoot([
+	{
+        name: 'x',
+        value: x
+	},
+        {
+        name: 'y',
+        value: y
+        }
+	]);
 }
 
 setTimeout(() => {

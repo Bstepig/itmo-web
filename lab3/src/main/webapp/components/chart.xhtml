@@ -19,11 +19,7 @@
     <h:outputScript name="scripts/chart.js"/>
 
     <h:form>
-        <p:remoteCommand name="requestShoot" action="#{rifle.updateTime}" update=":results"/>
+        <p:remoteCommand name="requestShoot" action="#{rifle.shootSpontaneous}" update=":results"/>
     </h:form>
-
-    <h:panelGroup id="results">
-        ...
-    </h:panelGroup>
 
 </ui:composition>

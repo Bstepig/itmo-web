@@ -90,6 +90,15 @@ public class Rifle {
         shots = orm.getShots(getShooter());
     }
 
+    public void shootSpontaneous() {
+        var map = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
+        String x = map.get("x");
+        String y = map.get("y");
+        this.coordinateX = Float.parseFloat(x);
+        this.coordinateY = Float.parseFloat(y);
+        this.shoot();
+    }
+
     public void clear() {
         shots.clear();
         orm.clearShots(getShooter());

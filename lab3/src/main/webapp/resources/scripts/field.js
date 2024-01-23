@@ -1,6 +1,59 @@
 'use strict'
 
-class Field {
+
+
+class EmptyField {
+  containerEl;
+  errorEl;
+  value;
+  name;
+  valid = false;
+
+  constructor(name, containerId) {
+    this.name = name;
+    this.containerEl = document.getElementById(containerId);
+//    this.errorEl = document.createElement('div');
+//    this.errorEl.classList.add('error');
+//    this.containerEl.appendChild(this.errorEl);
+  }
+
+  validate(newValue) {
+    return;
+  }
+
+  prepareValue(value) {
+    return value;
+  }
+
+  onChange(newValue) {
+    this.validate(newValue);
+    const floatValue = parseFloat(newValue);
+    if (!isNaN(floatValue)) {
+      this.value = this.prepareValue(this.value);
+    }
+    if (draw) {
+        draw();
+    }
+    this.changed();
+  }
+
+  writeValue(newValue) {
+//    this.validate(newValue);
+//    const floatValue = parseFloat(newValue);
+//    if (!isNaN(floatValue)) {
+//      this.value = this.prepareValue(this.value);
+//    }
+    this.value = newValue;
+    if (draw) {
+        draw();
+    }
+    this.changed();
+  }
+
+  changed = () => {};
+}
+
+class Field extends EmptyField {
   containerEl;
   errorEl;
   value;
@@ -10,6 +63,7 @@ class Field {
   valid = false;
 
   constructor(name, min, max, containerId) {
+    super(name, containerId);
     this.name = name;
     this.min = min;
     this.max = max;
@@ -64,6 +118,11 @@ class TextField extends Field {
 
   onChange(newValue) {
     super.onChange(newValue);
+    this.inputEl.value = this.value;
+  }
+
+  writeValue(newValue) {
+    super.writeValue(newValue);
     this.inputEl.value = this.value;
   }
   

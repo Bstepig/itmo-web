@@ -113,9 +113,9 @@ function draw() {
   	}
 
 	drawSquare();
+	drawAxis();
 	drawDots();
 	drawMarkDot();
-	drawAxis();
 	drawCursor();
 }
 
