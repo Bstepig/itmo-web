@@ -43,7 +43,7 @@ a:hover {
 	text-decoration: underline;
 }
 
-button {
+button, input[type="submit"] {
 	display: inline-block;
 	background: #15181a;
 	padding: 8px 15px;
@@ -54,11 +54,11 @@ button {
 	cursor: pointer;
 }
 
-button:disabled {
+button:disabled, input[type="submit"]:disabled {
 	cursor: default;
 }
 
-button:hover:not(:disabled) {
+button:hover:not(:disabled), input[type="submit"]:hover:not(:disabled) {
 	background: #111315;
     color: #525459;
 }

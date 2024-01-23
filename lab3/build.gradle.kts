@@ -12,6 +12,10 @@ repositories {
 dependencies {
     // https://mvnrepository.com/artifact/javax.servlet.jsp.jstl/jstl-api
     implementation("javax.servlet.jsp.jstl:jstl-api:1.2")
+    // https://mvnrepository.com/artifact/javax.servlet/jstl
+//    implementation("javax.servlet:jstl:1.2")
+    // https://mvnrepository.com/artifact/jakarta.servlet.jsp.jstl/jakarta.servlet.jsp.jstl-api
+    implementation("jakarta.servlet.jsp.jstl:jakarta.servlet.jsp.jstl-api:3.0.0")
 
     // https://mvnrepository.com/artifact/javax.servlet/javax.servlet-api
     compileOnly("javax.servlet:javax.servlet-api:4.0.1")
@@ -24,7 +28,7 @@ dependencies {
     implementation("com.sun.faces:jsf-impl:2.2.20")
 
     // https://mvnrepository.com/artifact/org.apache.tomcat/tomcat-servlet-api
-    implementation("org.apache.tomcat:tomcat-servlet-api:11.0.0-M11")
+//    implementation("org.apache.tomcat:tomcat-servlet-api:11.0.0-M11")
 
     // SLF4J
 
@@ -56,9 +60,9 @@ dependencies {
 
     // UI
     // https://mvnrepository.com/artifact/org.primefaces/primefaces
-    implementation("org.primefaces:primefaces:13.0.1")
+    implementation("org.primefaces:primefaces:6.2")
     // https://mvnrepository.com/artifact/org.icefaces/icefaces-ace
-    implementation("org.icefaces:icefaces-ace:4.3.0")
+//    implementation("org.icefaces:icefaces-ace:4.3.0")
 
 
     testImplementation(platform("org.junit:junit-bom:5.9.1"))

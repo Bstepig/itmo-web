@@ -8,6 +8,8 @@ import my.web.database.Orm;
 import my.web.database.JdbcOrm;
 
 import javax.faces.application.FacesMessage;
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.SessionScoped;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.validator.ValidatorException;
@@ -15,14 +17,14 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
-//@ManagedBean()
-//@SessionScoped()
+// @ManagedBean()
+// @SessionScoped()
 public class Rifle {
 
-    private final int updateTime = 2;
-    private final Input coordinateXInput = new Input(InputType.commandButton, 0, 10, 0.5);
-    private final Input coordinateYInput = new Input(InputType.pSlider, 0, 10, 0.25);
-    private final Input radiusInput = new Input(InputType.pSpinner, 0, 10, 0.25);
+    private final int updateTime = 9;
+    private final Input coordinateXInput = new Input(InputType.pSlider, -5, 5, 0.1);
+    private final Input coordinateYInput = new Input(InputType.inputText, -5, 3);
+    private final Input radiusInput = new Input(InputType.commandButton, List.of(1d, 2d, 3d, 4d, 5d));
 
     private float coordinateX = 0;
     private float coordinateY = 0;
@@ -32,10 +34,10 @@ public class Rifle {
     final Orm orm = new HibernateOrm();
 
     {
-        target.setQuadrant1(new TargetAreaCircle(1f));
-        target.setQuadrant2(new TargetAreaRectangle(0.5f, 1f));
-        target.setQuadrant3(new TargetAreaCircle(0.5f));
-        target.setQuadrant4(new TargetAreaTriangle(1f, 0.5f));
+        target.setQuadrant1(null);
+        target.setQuadrant2(new TargetAreaRectangle(1f));
+        target.setQuadrant3(new TargetAreaTriangle(0.5f, 0.5f));
+        target.setQuadrant4(new TargetAreaCircle(1f));
     }
 
     public Target getTarget() {

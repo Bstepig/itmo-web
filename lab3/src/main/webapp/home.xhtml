@@ -1,6 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
@@ -13,9 +11,9 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"/>
     <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
-    <link rel="stylesheet" href="./assets/styles/global.css"/>
-    <link rel="stylesheet" href="./assets/styles/shoot.css"/>
-    <link rel="stylesheet" href="./assets/styles/index.css"/>
+    <h:outputStylesheet rel="stylesheet" name="styles/global.css"/>
+    <h:outputStylesheet rel="stylesheet" name="styles/shoot.css"/>
+    <h:outputStylesheet rel="stylesheet" name="styles/index.css"/>
     <title>Web</title>
 </h:head>
 
@@ -25,19 +23,12 @@
 
     <ui:include src="/components/header.xhtml"/>
 
-    <f:view>
-
-        <div class="container">
-
-            <div class="wrapper">
-
-                <h4>Привет. Это моя очень стартовая страница. Она очень важна и без неё мне не заплатят. Можешь <a
-                        href="shooter.xhtml">идти</a> своей дорогой. </h4>
-
-            </div>
+    <div class="container">
+        <div class="wrapper">
+            <h4>Привет. Это моя очень стартовая страница. Она очень важна и без неё мне не заплатят. Можешь <a
+                    href="shooter.xhtml">идти</a> своей дорогой. </h4>
         </div>
-
-    </f:view>
+    </div>
 </h:body>
 
 </html>
