@@ -69,6 +69,8 @@ canvas.addEventListener('click', (event) => {
   const dot = calculateRealCoordinates({x, y});
   markDot = dot;
 
+  dots.push(dot);
+
   newShot({
     x: parseFloat(dot.x.toFixed(2)),
     y: parseFloat(dot.y.toFixed(2))

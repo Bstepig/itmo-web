@@ -7,7 +7,7 @@ class EmptyField {
   errorEl;
   value;
   name;
-  valid = false;
+  valid = true;
 
   constructor(name, containerId) {
     this.name = name;
@@ -18,7 +18,7 @@ class EmptyField {
   }
 
   validate(newValue) {
-    return;
+    this.valid = true;
   }
 
   prepareValue(value) {
